@@ -31,15 +31,18 @@ public class SquadsDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Reservation>().HasKey(r => new { r.UserId, r.SessionId });
-        modelBuilder.Entity<Reservation>()
-            .HasOne<User>(r => r.User)
-            .WithMany(u => u.Reservations)
-            .HasForeignKey(r => r.UserId);
-        modelBuilder.Entity<Reservation>()
-            .HasOne<Session>(r => r.Session)
-            .WithMany(s => s.Reservations)
-            .HasForeignKey(r => r.SessionId);
+        //modelBuilder.Entity<Reservation>()
+        //    .HasOne(r => r.User)
+        //    .WithMany(u => u.Reservations)
+        //    .HasForeignKey(r => r.UserId);
+        //modelBuilder.Entity<Reservation>()
+        //    .HasOne(r => r.Session)
+        //    .WithMany(s => s.Reservations)
+        //    .HasForeignKey(r => r.SessionId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Reservations)
+            .WithMany(r => r.)
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }

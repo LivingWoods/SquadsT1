@@ -11,6 +11,9 @@ public class Reservation : Entity
     public User User { get; }
     public int SessionId { get; }
     public Session Session { get; }
+    public DateTime? CanceledOn { get; private set; }
+
+    public bool IsCanceled => CanceledOn is null;
 
     private Reservation() { }
     public Reservation(User user, Session session)
@@ -18,5 +21,10 @@ public class Reservation : Entity
         User = Guard.Against.Null(user, nameof(user));
         Session = Guard.Against.Null(session, nameof(session));
         Guard.Against.OutOfRange(Session.AmountOfTotalReservations + 1, nameof(Session.Reservations), 0, 6);
+    }
+
+    public void CancelReservation()
+    {
+        CanceledOn = DateTime.UtcNow;
     }
 }

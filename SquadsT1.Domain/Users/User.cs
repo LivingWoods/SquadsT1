@@ -1,17 +1,24 @@
 ﻿using SquadsT1.Domain.Reservations;
 using SquadsT1.Domain.Common;
 using Ardalis.GuardClauses;
+using SquadsT1.Domain.Sessions;
+using SquadsT1.Domain.Tokens;
+using SquadsT1.Domain.Subscriptions;
 
 namespace SquadsT1.Domain.Users;
 
 public class User : Entity
 {
     private List<Reservation> _reservations = new();
+    private List<Token> _tokens = new();
 
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime BirthDate { get; set; }
-    public string PhoneNumber { get; set; }
+    public Email Email { get; set; }
+    public PhoneNumber PhoneNumber { get; set; }
+    public Address Address { get; set; }
+    public Subscription? Subscription { get; private set; }
     public string PhysicalIssues { get; set; }
     public string DrugsUsed { get; set; }
     public int Length { get; set; }
@@ -19,23 +26,6 @@ public class User : Entity
     public bool OptedInOnWhatsapp { get; set; }
     public bool HasSignedHouseRules { get; set; }
     public bool IsTrainer { get; set; }
-
-    private User() { }
-
-    public User(string firstName, string lastName, DateTime birthDate, string phoneNumber, string physicalIssues, string drugsUsed, int length, bool optedInOnNewsletter, bool optedInOnWhatsapp, bool hasSignedHouseRules, bool isTrainer)
-    {
-        FirstName = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
-        LastName = Guard.Against.NullOrWhiteSpace(lastName, nameof(lastName));
-        BirthDate = birthDate;
-        PhoneNumber = phoneNumber;
-        PhysicalIssues = physicalIssues;
-        DrugsUsed = drugsUsed;
-        Length = length;
-        OptedInOnNewsletter = optedInOnNewsletter;
-        OptedInOnWhatsapp = optedInOnWhatsapp;
-        HasSignedHouseRules = hasSignedHouseRules;
-        IsTrainer = isTrainer;
-    }
 
     /// <summary>
     /// Returns the reservations list as an immutable read only list
@@ -61,4 +51,77 @@ public class User : Entity
     /// Returns the amount of all reservations for this user
     /// </summary>
     public int AmountOfTotalReservations => _reservations.Count;
+    /// <summary>
+    /// Returns the tokens as an immutable read only list
+    /// </summary>
+    public IReadOnlyList<Token> Tokens => _tokens.AsReadOnly();
+    /// <summary>
+    /// Returns the amount of available tokens
+    /// </summary>
+    public int AmountOfAvailableTokens => _tokens.Count(t => !t.IsUsed);
+    /// <summary>
+    /// Returns the first available token or null when there are no more available tokens
+    /// </summary>
+    public Token? FirstAvailableToken => _tokens.FirstOrDefault(t => !t.IsUsed);
+    /// <summary>
+    /// Returns wether or not the user is able to book a reservation
+    /// </summary>
+    public bool HasActiveSubscription => DateTime.UtcNow >= Subscription?.GetLatestSubscriptionLine.ValidFrom && DateTime.UtcNow <= Subscription?.GetLatestSubscriptionLine.ValidTill;
+
+    private User() { }
+
+    public User(string firstName, string lastName, DateTime birthDate, Email email, PhoneNumber phoneNumber, Address address, string physicalIssues, string drugsUsed, int length, bool optedInOnNewsletter, bool optedInOnWhatsapp, bool hasSignedHouseRules, bool isTrainer)
+    {
+        FirstName = Guard.Against.NullOrWhiteSpace(firstName, nameof(firstName));
+        LastName = Guard.Against.NullOrWhiteSpace(lastName, nameof(lastName));
+        BirthDate = birthDate;
+        Email = email;
+        PhoneNumber = phoneNumber;
+        Address = address;
+        Subscription = null;
+        PhysicalIssues = Guard.Against.NullOrWhiteSpace(physicalIssues, nameof(physicalIssues));
+        DrugsUsed = Guard.Against.NullOrWhiteSpace(drugsUsed, nameof(drugsUsed));
+        Length = Guard.Against.NegativeOrZero(length, nameof(length));
+        OptedInOnNewsletter = optedInOnNewsletter;
+        OptedInOnWhatsapp = optedInOnWhatsapp;
+        HasSignedHouseRules = hasSignedHouseRules;
+        IsTrainer = isTrainer;
+        _tokens.Add(new Token(new Payment()));
+    }
+
+    /// <summary>
+    /// Creates a new reservation for a given session and adds it to the reservations of the user
+    /// </summary>
+    /// <param name="session">The session for which a new reservation is created</param>
+    public void ReserveSession(Session session)
+    {
+        if (AmountOfPlannedReservations < 3)
+        {
+            if (HasActiveSubscription)
+            {
+                _reservations.Add(new Reservation(this, session));
+            }
+            else if (AmountOfAvailableTokens > 0)
+            {
+                _reservations.Add(new Reservation(this, session));
+                FirstAvailableToken?.UseToken();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks wether or not the user already has a subscription and adds a new subscription line
+    /// </summary>
+    /// <param name="validFrom"></param>
+    /// <param name="validTill"></param>
+    /// <param name="isPaid"></param>
+    public void AddSubscription(DateTime validFrom, DateTime validTill, bool isPaid)
+    {
+        if (Subscription is null)
+        {
+            Subscription = new Subscription();
+        }
+
+        Subscription.RenewSubscription(validFrom, validTill, isPaid ? new Payment() : null);
+    }
 }

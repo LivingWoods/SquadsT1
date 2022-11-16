@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SquadsT1.Domain\SquadsT1.Domain.csproj" />
-    <ProjectReference Include="..\SquadsT1.Persistence\SquadsT1.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

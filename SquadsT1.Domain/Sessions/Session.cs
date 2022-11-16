@@ -14,7 +14,6 @@ public class Session : Entity
     public DateTime EndDate { get; }
     public SessionType SessionType { get; private set; }
     public User Trainer { get; private set; }
-    public int? TrainerId { get; private set; }
 
     /// <summary>
     /// Returns the waitlist as an immutable readonly list
@@ -51,10 +50,10 @@ public class Session : Entity
     /// <param name="trainer">The trainer that will be giving the session</param>
     public Session(DateTime startDate, DateTime endDate, SessionType sessionType, User trainer)
     {
-        StartDate = Guard.Against.OutOfRange(startDate, nameof(startDate), DateTime.UtcNow, DateTime.MaxValue, "Session week start date can not be in the past");
-        EndDate = Guard.Against.OutOfRange(endDate, nameof(endDate), StartDate, DateTime.MaxValue, "Session week end date should be greater than the start date of the session");
-        SessionType = Guard.Against.EnumOutOfRange(sessionType, nameof(sessionType), "Session type should exist");
-        Trainer = Guard.Against.Null(trainer, nameof(trainer), "Trainer can not be null");
+        StartDate = Guard.Against.OutOfRange(startDate, nameof(startDate), DateTime.UtcNow, DateTime.MaxValue);
+        EndDate = Guard.Against.OutOfRange(endDate, nameof(endDate), StartDate, DateTime.MaxValue);
+        SessionType = Guard.Against.EnumOutOfRange(sessionType, nameof(sessionType));
+        Trainer = Guard.Against.Null(trainer, nameof(trainer));
     }
 
     /// <summary>
