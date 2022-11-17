@@ -1,21 +1,54 @@
-﻿using Ardalis.GuardClauses;
+﻿using SquadsT1.Domain.Common;
+using Ardalis.GuardClauses;
+using System.Net.Mail;
 
 namespace SquadsT1.Domain.Users;
 
-public class Email
+public class Email : ValueObject
 {
-	private string _validEmailRegexPattern = @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$";
-	public string EmailAddress { get; }
+	public string Value { get; }
 
-	public Email(string email)
+	/// <summary>
+	/// EF constructor
+	/// </summary>
+	private Email() { }
+    /// <summary>
+    /// Validates and creates a new email
+    /// </summary>
+    /// <param name="email">The email address</param>
+    public Email(string email)
 	{
 		email = email.Trim();
 
-		Guard.Against.NullOrEmpty(email, nameof(email));
-		Guard.Against.NullOrWhiteSpace(email, nameof(email));
-		Guard.Against.InvalidFormat(email, nameof(email), _validEmailRegexPattern);
+        if (!IsValid(email))
+        {
+            throw new ApplicationException($"Invalid {nameof(Email)}: {email}");
+        }
 
-		EmailAddress = email.ToLower();
+        Value = email;
 
 	}
+    /// <summary>
+    /// Validates the email address
+    /// </summary>
+    /// <param name="emailaddress"></param>
+    /// <returns></returns>
+    private static bool IsValid(string emailaddress)
+    {
+        try
+        {
+            MailAddress m = new(emailaddress);
+
+            return true;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+    }
+
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Value.ToLowerInvariant();
+    }
 }

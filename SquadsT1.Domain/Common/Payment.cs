@@ -1,11 +1,15 @@
-﻿namespace SquadsT1.Domain.Common;
+﻿using Ardalis.GuardClauses;
+
+namespace SquadsT1.Domain.Common;
 
 public class Payment
 {
-    public DateTime PaidOn { get; set; }
+    public DateTime PaidOn { get; }
+	public double Amount { get; }
 
-	public Payment()
+	public Payment(double amount)
 	{
+		Amount = Guard.Against.NegativeOrZero(amount, nameof(amount));
 		PaidOn = DateTime.UtcNow;
 	}
 }

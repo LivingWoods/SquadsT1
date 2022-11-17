@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SquadsT1.Domain.Users.User">
+    <Position X="6.75" Y="3.75" Width="3.25" />
+    <AssociationLine Name="_reservations" Type="SquadsT1.Domain.Reservations.Reservation" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.062" Y="3.75" />
+        <Point X="8.062" Y="1.688" />
+        <Point X="16.75" Y="1.688" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AEiAAOAAAKgIFAAkEACAYARwAAQAgACCQAAIAAAFAAg=</HashCode>
+      <FileName>Users\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PhoneNumber" />
+      <Property Name="Email" />
+      <Property Name="Address" />
+      <Property Name="Subscription" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_tokens" />
+      <Field Name="_reservations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SquadsT1.Domain.Users.PhoneNumber">
+    <Position X="11.5" Y="8.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAABAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Users\PhoneNumber.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SquadsT1.Domain.Users.Email">
+    <Position X="11.5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAgAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Users\Email.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SquadsT1.Domain.Users.Address">
+    <Position X="11.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIIAAAAAAAAAAAAAABAAAAAAAQAAA=</HashCode>
+      <FileName>Users\Address.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SquadsT1.Domain.Tokens.Token">
+    <Position X="3.75" Y="3.75" Width="1.75" />
+    <AssociationLine Name="Payment" Type="SquadsT1.Domain.Common.Payment" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.688" Y="3.75" />
+        <Point X="4.688" Y="2.375" />
+        <Point X="2" Y="2.375" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAAABAAAEgAAAAAAAIAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tokens\Token.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Payment" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SquadsT1.Domain.Subscriptions.Subscription">
+    <Position X="3.5" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAEAgUAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Subscriptions\Subscription.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_subscriptionLines" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SquadsT1.Domain.Subscriptions.SubscriptionLine">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <AssociationLine Name="Payment" Type="SquadsT1.Domain.Common.Payment" FixedFromPoint="true">
+      <Path>
+        <Point X="1.25" Y="6.75" />
+        <Point X="1.25" Y="3.247" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.12" Y="0.258" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAIAAAAAAAAAAAQAAACAAAAAAAgA=</HashCode>
+      <FileName>Subscriptions\SubscriptionLine.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Payment" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SquadsT1.Domain.Sessions.Session">
+    <Position X="21.5" Y="4" Width="2.25" />
+    <AssociationLine Name="_reservations" Type="SquadsT1.Domain.Reservations.Reservation" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22.625" Y="4" />
+        <Point X="22.625" Y="1.688" />
+        <Point X="18.75" Y="1.688" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAgAgAAAIAAGAiAIAAgAACAwAAAAgAAAEAAAAA=</HashCode>
+      <FileName>Sessions\Session.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Trainer" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_reservations" />
+      <Field Name="_waitlist" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SquadsT1.Domain.Reservations.Reservation">
+    <Position X="16.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAABAAAAAAAAAQABAAAAAAgIAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Reservations\Reservation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SquadsT1.Domain.Common.Payment">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Payment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

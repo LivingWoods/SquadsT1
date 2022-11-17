@@ -13,6 +13,9 @@ public class Subscription
     /// </summary>
     public SubscriptionLine GetLatestSubscriptionLine => _subscriptionLines.Last();
 
+    /// <summary>
+    /// Validates and creates a new subscription
+    /// </summary>
     public Subscription()
     {
         IsCanceled = false;
@@ -32,7 +35,7 @@ public class Subscription
     /// <summary>
     /// Reactivates the subscription
     /// </summary>
-    public void ReactiveSubscription()
+    public void ReactivateSubscription()
     {
         if (IsCanceled)
         {
@@ -46,8 +49,8 @@ public class Subscription
     /// <param name="validFrom"></param>
     /// <param name="validTill"></param>
     /// <param name="payment"></param>
-    public void RenewSubscription(DateTime validFrom, DateTime validTill, Payment? payment)
+    public void RenewSubscription(DateTime validFrom, Payment? payment)
     {
-        _subscriptionLines.Add(new SubscriptionLine(validFrom, validTill, payment));
+        _subscriptionLines.Add(new SubscriptionLine(validFrom, payment));
     }
 }

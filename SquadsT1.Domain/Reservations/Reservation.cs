@@ -13,9 +13,17 @@ public class Reservation : Entity
     public Session Session { get; }
     public DateTime? CanceledOn { get; private set; }
 
-    public bool IsCanceled => CanceledOn is null;
+    public bool IsCanceled => CanceledOn is not null;
 
+    /// <summary>
+    /// EF constructor
+    /// </summary>
     private Reservation() { }
+    /// <summary>
+    /// Validates and creates a new reservation
+    /// </summary>
+    /// <param name="user">The user who wants to book a spot</param>
+    /// <param name="session">The session for which the users wants to book a spot</param>
     public Reservation(User user, Session session)
     {
         User = Guard.Against.Null(user, nameof(user));
@@ -23,6 +31,9 @@ public class Reservation : Entity
         Guard.Against.OutOfRange(Session.AmountOfTotalReservations + 1, nameof(Session.Reservations), 0, 6);
     }
 
+    /// <summary>
+    /// Cancels the reservation
+    /// </summary>
     public void CancelReservation()
     {
         CanceledOn = DateTime.UtcNow;

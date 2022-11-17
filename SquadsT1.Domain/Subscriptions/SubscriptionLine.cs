@@ -13,11 +13,15 @@ public class SubscriptionLine
     /// Returns wether or not the token has been paid
     /// </summary>
     public bool IsPaid => Payment is not null;
-
-    public SubscriptionLine(DateTime validFrom, DateTime validTill, Payment? payment)
+    /// <summary>
+    /// Validates and creates a new subscription line
+    /// </summary>
+    /// <param name="validFrom">The date from which the subscription line is valid</param>
+    /// <param name="payment">Wether or not this subscription line has been paid for already</param>
+    public SubscriptionLine(DateTime validFrom, Payment? payment)
     {
         ValidFrom = Guard.Against.OutOfRange(validFrom, nameof(validFrom), DateTime.UtcNow, DateTime.MaxValue);
-        ValidTill = Guard.Against.OutOfRange(validTill, nameof(validTill), validFrom, DateTime.MaxValue);
+        ValidTill = validFrom.AddMonths(1);
         Payment = payment;
     }
 

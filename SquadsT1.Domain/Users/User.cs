@@ -64,10 +64,17 @@ public class User : Entity
     /// </summary>
     public Token? FirstAvailableToken => _tokens.FirstOrDefault(t => !t.IsUsed);
     /// <summary>
+    /// Returns the amount of unpaid tokens
+    /// </summary>
+    public int AmountOfUnpaidTokens => _tokens.Count(t => !t.IsPaid);
+    /// <summary>
     /// Returns wether or not the user is able to book a reservation
     /// </summary>
     public bool HasActiveSubscription => DateTime.UtcNow >= Subscription?.GetLatestSubscriptionLine.ValidFrom && DateTime.UtcNow <= Subscription?.GetLatestSubscriptionLine.ValidTill;
 
+    /// <summary>
+    /// EF constructor
+    /// </summary>
     private User() { }
 
     public User(string firstName, string lastName, DateTime birthDate, Email email, PhoneNumber phoneNumber, Address address, string physicalIssues, string drugsUsed, int length, bool optedInOnNewsletter, bool optedInOnWhatsapp, bool hasSignedHouseRules, bool isTrainer)
@@ -86,7 +93,7 @@ public class User : Entity
         OptedInOnWhatsapp = optedInOnWhatsapp;
         HasSignedHouseRules = hasSignedHouseRules;
         IsTrainer = isTrainer;
-        _tokens.Add(new Token(new Payment()));
+        _tokens.Add(new Token(new Payment(1)));
     }
 
     /// <summary>
@@ -110,18 +117,47 @@ public class User : Entity
     }
 
     /// <summary>
+    /// Adds the specified amount of tokens to the user
+    /// </summary>
+    /// <param name="amountOfTokens">The amount of tokens</param>
+    /// <param name="isPaid">Wether the tokens have already been paid for</param>
+    public void OrderTokens(int amountOfTokens, bool isPaid, double? paymentAmount)
+    {
+        for (int i = 0; i < amountOfTokens; i++)
+        {
+            _tokens.Add(new Token(isPaid && paymentAmount is not null ? new Payment((double) paymentAmount) : null));
+        }
+    }
+
+    /// <summary>
     /// Checks wether or not the user already has a subscription and adds a new subscription line
     /// </summary>
     /// <param name="validFrom"></param>
     /// <param name="validTill"></param>
     /// <param name="isPaid"></param>
-    public void AddSubscription(DateTime validFrom, DateTime validTill, bool isPaid)
+    public void AddSubscription(DateTime validFrom, bool isPaid, double? paymentAmount)
     {
         if (Subscription is null)
         {
             Subscription = new Subscription();
         }
 
-        Subscription.RenewSubscription(validFrom, validTill, isPaid ? new Payment() : null);
+        if (Subscription.IsCanceled)
+        {
+            Subscription.ReactivateSubscription();
+        }
+
+        Subscription.RenewSubscription(validFrom, isPaid && paymentAmount is not null ? new Payment((double) paymentAmount) : null);
+    }
+
+    /// <summary>
+    /// Cancels the subscription of the user
+    /// </summary>
+    public void CancelSubscription()
+    {
+        if (Subscription is not null && !Subscription.IsCanceled)
+        {
+            Subscription.CancelSubscription();
+        }
     }
 }

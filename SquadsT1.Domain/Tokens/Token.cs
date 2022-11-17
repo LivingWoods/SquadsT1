@@ -13,6 +13,14 @@ public class Token : Entity
     /// </summary>
     public bool IsPaid => Payment is not null;
 
+    /// <summary>
+    /// EF constructor
+    /// </summary>
+    private Token() { }
+    /// <summary>
+    /// Validates and creates a new token
+    /// </summary>
+    /// <param name="payment">Wether or not the token has already been paid for</param>
     public Token(Payment? payment)
     {
         IsUsed = false;

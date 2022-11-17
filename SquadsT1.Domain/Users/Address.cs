@@ -1,8 +1,9 @@
 ﻿using Ardalis.GuardClauses;
+using SquadsT1.Domain.Common;
 
 namespace SquadsT1.Domain.Users;
 
-public class Address
+public class Address : ValueObject
 {
     public string AddressLine1 { get; }
     public string AddressLine2 { get; }
@@ -27,5 +28,13 @@ public class Address
         AddressLine2 = addressLine2;
         ZipCode = zipCode;
         City = city;
+    }
+
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return AddressLine1.ToLower();
+        yield return AddressLine2.ToLower();
+        yield return ZipCode.ToLower();
+        yield return City.ToLower();
     }
 }

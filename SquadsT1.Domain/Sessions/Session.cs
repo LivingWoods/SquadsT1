@@ -40,6 +40,9 @@ public class Session : Entity
     /// </summary>
     public int AmountOfTotalReservations => _reservations.Count;
 
+    /// <summary>
+    /// EF constructor
+    /// </summary>
     private Session() { }
     /// <summary>
     /// Validates and creates a new session
