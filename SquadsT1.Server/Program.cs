@@ -1,4 +1,6 @@
-using SquadsT1.Persistence;
+using SquadsT1.Services.Greetings;
+using SquadsT1.Services.Sessions;
+using ProtoBuf.Grpc.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCodeFirstGrpc();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<SquadsDbContext>();
 
 var app = builder.Build();
 
@@ -22,6 +24,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.MapGrpcService<GreeterService>();
+app.MapGrpcService<SessionService>();
 
 app.MapControllers();
 

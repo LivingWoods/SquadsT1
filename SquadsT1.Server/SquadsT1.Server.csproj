@@ -7,16 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.0.179" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SquadsT1.Domain\SquadsT1.Domain.csproj" />
+    <ProjectReference Include="..\SquadsT1.Services\SquadsT1.Services.csproj" />
+    <ProjectReference Include="..\SquadsT1.Shared\SquadsT1.Shared.csproj" />
   </ItemGroup>
 
 </Project>
