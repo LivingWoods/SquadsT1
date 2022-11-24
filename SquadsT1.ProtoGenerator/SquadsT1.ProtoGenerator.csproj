@@ -8,12 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.Net.Client" Version="2.50.0" />
-    <PackageReference Include="protobuf-net.Grpc" Version="1.0.179" />
+    <PackageReference Include="protobuf-net.Grpc.AspNetCore.Reflection" Version="1.0.179" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SquadsT1.Shared\SquadsT1.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Protos\" />
   </ItemGroup>
 
 </Project>

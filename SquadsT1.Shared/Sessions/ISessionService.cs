@@ -7,5 +7,5 @@ namespace SquadsT1.Shared.Sessions;
 public interface ISessionService
 {
     [OperationContract]
-    Task<IEnumerable<SessionReply.Index>> GetAllSessionsAsync(SessionRequest.Index request, CallContext context = default);
+    Task<IEnumerable<SessionReply.IndexReply>> GetAllSessionsAsync(SessionRequest.IndexRequest request, CallContext context = default);
 }

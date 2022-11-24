@@ -8,10 +8,10 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        using var channel = GrpcChannel.ForAddress("https://localhost:7152");
-        var client = channel.CreateGrpcService<ISessionService>();
+        using var channel = GrpcChannel.ForAddress("http://localhost:25152");
+        var sessionClient = channel.CreateGrpcService<ISessionService>();
 
-        var reply = await client.GetAllSessionsAsync(new SessionRequest.Index());
+        var reply = await sessionClient.GetAllSessionsAsync(new SessionRequest.IndexRequest());
 
         foreach (var session in reply)
         {

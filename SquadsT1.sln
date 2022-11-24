@@ -5,15 +5,17 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquadsT1.Domain", "SquadsT1.Domain\SquadsT1.Domain.csproj", "{67FDC7F1-FA44-471F-A8CE-9ED73B328EB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquadsT1.Services", "SquadsT1.Services\SquadsT1.Services.csproj", "{F9DE8C35-F3FB-4975-95E3-A65C06E38ED4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquadsT1.Services", "SquadsT1.Services\SquadsT1.Services.csproj", "{F9DE8C35-F3FB-4975-95E3-A65C06E38ED4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquadsT1.Shared", "SquadsT1.Shared\SquadsT1.Shared.csproj", "{DC8C6915-023C-40F3-92F5-199C8E85651E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquadsT1.Shared", "SquadsT1.Shared\SquadsT1.Shared.csproj", "{DC8C6915-023C-40F3-92F5-199C8E85651E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquadsT1.Server", "SquadsT1.Server\SquadsT1.Server.csproj", "{849B730C-D4A4-4467-9EA9-98BC4D9775F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquadsT1.Server", "SquadsT1.Server\SquadsT1.Server.csproj", "{849B730C-D4A4-4467-9EA9-98BC4D9775F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquadsT1.Client", "SquadsT1.Client\SquadsT1.Client.csproj", "{FF290A05-6EE9-4EF1-9526-276574D93EC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquadsT1.Client", "SquadsT1.Client\SquadsT1.Client.csproj", "{FF290A05-6EE9-4EF1-9526-276574D93EC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquadsT1.Console", "SquadsT1.Console\SquadsT1.Console.csproj", "{6CACA2CF-ACFB-4803-920E-5415EE28AC18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquadsT1.Console", "SquadsT1.Console\SquadsT1.Console.csproj", "{6CACA2CF-ACFB-4803-920E-5415EE28AC18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquadsT1.ProtoGenerator", "SquadsT1.ProtoGenerator\SquadsT1.ProtoGenerator.csproj", "{0000E798-AD77-43BB-A441-895F2AC12FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{6CACA2CF-ACFB-4803-920E-5415EE28AC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CACA2CF-ACFB-4803-920E-5415EE28AC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CACA2CF-ACFB-4803-920E-5415EE28AC18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0000E798-AD77-43BB-A441-895F2AC12FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0000E798-AD77-43BB-A441-895F2AC12FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0000E798-AD77-43BB-A441-895F2AC12FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0000E798-AD77-43BB-A441-895F2AC12FE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

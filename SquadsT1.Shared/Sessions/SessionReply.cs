@@ -5,7 +5,7 @@ namespace SquadsT1.Shared.Sessions;
 public abstract class SessionReply
 {
     [DataContract]
-    public class Index
+    public class IndexReply
     {
         [DataMember(Order = 1)] public int Id { get; set; }
         [DataMember(Order = 2)] public DateTime StartDate { get; set; }

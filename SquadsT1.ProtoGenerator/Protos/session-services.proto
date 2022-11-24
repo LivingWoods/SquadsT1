@@ -1,0 +1,20 @@
+syntax = "proto3";
+package SquadsT1.Shared.Sessions;
+import "protobuf-net/bcl.proto"; // schema for protobuf-net's handling of core .NET types
+
+message IEnumerable_IndexReply {
+   repeated IndexReply items = 1;
+}
+message IndexReply {
+   int32 Id = 1;
+   .bcl.DateTime StartDate = 2;
+   .bcl.DateTime EndDate = 3;
+   int32 SpotsLeft = 4;
+   string SessionType = 5;
+   string Trainer = 6;
+}
+message IndexRequest {
+}
+service SessionService {
+   rpc GetAllSessions (IndexRequest) returns (IEnumerable_IndexReply);
+}
